@@ -1,0 +1,66 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Usuario{
+- usuario : String
+- contraseña : String
++ Usuario (usuario: String, contraseña:String)
+}
+class Administrador{
++ Administrador (usuario: String, contraseña:String)
+}
+class ArbolBinarioBusqueda{
+   - raiz : NodoBST
+   + agregarRecursivo(actual : NodoBST, estudiante: Estudiante)
+   + buscarEstudiante (id : int)
+   + buscarRecursivo(actual : NodoBST, id : int)
+}
+class ColaMatriculacion{
+- cola: Estudiante[]
+  - frente: int
+  - fin: int
+  - capacidad: int
+  + ColaMatriculacion(capacidad: int)
+  + agregarSolicitud(estudiante: Estudiante): void
+  + procesarSolicitud(): Estudiante
+}
+class Estudiante{
+- id : int
+- nombre : String
++ Estudiante ( usuario: String, id : int, nombre: String)
+}
+class ListaDoble{
+- cabeza : NodoDoble
++ agregarEstudiante (estudiante: Estudiante)
++ mostrarEstudiantes()
+}
+class ListaUsuarios{
+- cabeza : NodoUsuario
++ agregarUsuario(usuario: Usuario)
++ validarUsuario( (usuario: String, contraseña: String) : Usuario
+}
+class NodoBST{}
+class NodoDoble{}
+class NodoUsuario{}
+class SistemaMatriculacion {
+ - listaUsuarios: ListaUsuarios
+ - listaEstudiantes: ListaDoble
+ - arbolEstudiantes: ArbolBinarioBusqueda
+ - colaMatriculacion: ColaMatriculacion
+ + {static} main(args: String[]): void
+  - iniciarSistema(): void
+  - agregarEstudiante(estudiante: Estudiante): void
+  - menuAdministrador(): void
+  - menuEstudiante(estudiante: Estudiante): void
+}
+ArbolBinarioBusqueda --> NodoBST
+SistemaMatriculacion --> ListaDoble
+SistemaMatriculacion --> ListaUsuarios
+SistemaMatriculacion --> ArbolBinarioBusqueda
+SistemaMatriculacion --> ColaMatriculacion
+ColaMatriculacion --> Estudiante
+ListaUsuarios --> NodoUsuario
+ListaDoble --> NodoDoble
+Usuario <|-- Administrador
+Usuario <|-- Estudiante
+@enduml
