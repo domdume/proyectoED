@@ -3,26 +3,50 @@ class ColaMatriculacion {
     int frente;
     int fin;
     int capacidad;
+    int tamañoActual;
 
     ColaMatriculacion(int capacidad) {
         this.capacidad = capacidad;
         cola = new Estudiante[capacidad];
         frente = 0;
         fin = -1;
+        tamañoActual = 0;
     }
 
     void agregarSolicitud(Estudiante estudiante) {
-        if (fin == capacidad - 1) {
-            fin = -1;
+        if (tamañoActual == capacidad) {
+            System.out.println("La cola de matriculación está llena");
+            return;
         }
-        cola[++fin] = estudiante;
+        fin = (fin + 1) % capacidad;
+        cola[fin] = estudiante;
+        tamañoActual++;
     }
 
     Estudiante procesarSolicitud() {
-        Estudiante temp = cola[frente++];
-        if (frente == capacidad) {
-            frente = 0;
+        if (tamañoActual == 0) {
+            System.out.println("No hay solicitudes en la cola");
+            return null;
         }
+        Estudiante temp = cola[frente];
+        frente = (frente + 1) % capacidad;
+        tamañoActual--;
         return temp;
+    }
+
+    boolean estaMatriculado(Estudiante estudiante) {
+        if (tamañoActual == 0) {
+            return false;
+        }
+        int i = frente;
+        int count = 0;
+        while (count < tamañoActual) {
+            if (cola[i] != null && cola[i].id == estudiante.id) {
+                return true;
+            }
+            i = (i + 1) % capacidad;
+            count++;
+        }
+        return false;
     }
 }

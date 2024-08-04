@@ -6,6 +6,7 @@ public class SistemaMatriculacion {
     ArbolBinarioBusqueda arbolEstudiantes = new ArbolBinarioBusqueda();
     ColaMatriculacion colaMatriculacion = new ColaMatriculacion(10);
 
+
     public static void main(String[] args) {
         SistemaMatriculacion sistema = new SistemaMatriculacion();
         sistema.iniciarSistema();
@@ -67,9 +68,10 @@ public class SistemaMatriculacion {
 
         do {
             System.out.println("Menú Administrador:");
-            System.out.println("1. Ver estudiantes matriculados");
-            System.out.println("2. Buscar estudiante");
-            System.out.println("3. Salir");
+            System.out.println("1. Ver todos los estudiantes");
+            System.out.println("2. Ver estudiantes matriculados");
+            System.out.println("3. Buscar estudiante");
+            System.out.println("4. Salir");
             System.out.print("Opción: ");
             opcion = scanner.nextInt();
 
@@ -78,6 +80,9 @@ public class SistemaMatriculacion {
                     listaEstudiantes.mostrarEstudiantes();
                     break;
                 case 2:
+                    listaEstudiantes.mostrarEstudiantesMatriculados(colaMatriculacion);
+                    break;
+                case 3:
                     System.out.print("Ingrese el ID del estudiante: ");
                     int id = scanner.nextInt();
                     Estudiante estudiante = arbolEstudiantes.buscarEstudiante(id);
@@ -87,13 +92,13 @@ public class SistemaMatriculacion {
                         System.out.println("Estudiante no encontrado");
                     }
                     break;
-                case 3:
+                case 4:
                     System.out.println("Saliendo...");
                     break;
                 default:
                     System.out.println("Opción inválida");
             }
-        } while (opcion != 3);
+        } while (opcion != 4);
     }
 
     void menuEstudiante(Estudiante estudiante) {
@@ -111,6 +116,7 @@ public class SistemaMatriculacion {
                 case 1:
                     colaMatriculacion.agregarSolicitud(estudiante);
                     System.out.println("Solicitud de matriculación enviada");
+
                     break;
                 case 2:
                     System.out.println("Saliendo...");

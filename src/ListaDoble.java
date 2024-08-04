@@ -22,4 +22,14 @@ class ListaDoble {
             temp = temp.siguiente;
         }
     }
+
+    void mostrarEstudiantesMatriculados(ColaMatriculacion colaMatriculacion) {
+        NodoDoble temp = cabeza;
+        while (temp != null) {
+            if (colaMatriculacion.estaMatriculado(temp.estudiante)) {
+                System.out.println("ID: " + temp.estudiante.id + ", Nombre: " + temp.estudiante.nombre);
+            }
+            temp = temp.siguiente;
+        }
+    }
 }
