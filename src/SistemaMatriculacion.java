@@ -17,6 +17,8 @@ public class SistemaMatriculacion {
         listaUsuarios.agregarUsuario(new Administrador("admin", "admin123"));
         listaUsuarios.agregarUsuario(new Estudiante("juan", "juan123", 1, "Juan Perez"));
         listaUsuarios.agregarUsuario(new Estudiante("maria", "maria123", 2, "Maria Lopez"));
+        listaUsuarios.agregarUsuario(new Estudiante("Salma", "salma123", 2, "Salma Morales"));
+
         do {
             Scanner scanner = new Scanner(System.in);
             System.out.println("BN AL SISTEMA UNIVERSIDAD MORALES");
