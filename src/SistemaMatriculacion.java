@@ -15,9 +15,9 @@ public class SistemaMatriculacion {
         // Crear algunos usuarios de prueba
         int opcion;
         listaUsuarios.agregarUsuario(new Administrador("admin", "admin123"));
-        listaUsuarios.agregarUsuario(new Estudiante("juan", "juan123", 1, "Juan Perez"));
-        listaUsuarios.agregarUsuario(new Estudiante("maria", "maria123", 2, "Maria Lopez"));
-        listaUsuarios.agregarUsuario(new Estudiante("Salma", "salma123", 2, "Salma Morales"));
+        agregarEstudiante(new Estudiante("juan", "juan123", 1, "Juan Perez"));
+        agregarEstudiante(new Estudiante("maria", "maria123", 2, "Maria Lopez"));
+        agregarEstudiante(new Estudiante("salma", "salma123", 3, "Salma Morales"));
 
         do {
             Scanner scanner = new Scanner(System.in);
@@ -51,27 +51,14 @@ public class SistemaMatriculacion {
                 case 2:
                     System.out.println("Saliendo...");
                     break;
-        }
-//        Scanner scanner = new Scanner(System.in);
-//
-//        System.out.println("Bienvenido al Sistema de Matriculación");
-//        System.out.print("Usuario: ");
-//        String usuario = scanner.nextLine();
-//        System.out.print("Contraseña: ");
-//        String contraseña = scanner.nextLine();
-//
-//        Usuario user = listaUsuarios.validarUsuario(usuario, contraseña);
-//
-//        if (user != null) {
-//            if (user instanceof Administrador) {
-//                menuAdministrador();
-//            } else if (user instanceof Estudiante) {
-//                menuEstudiante((Estudiante) user);
-//            }
-//        } else {
-//            System.out.println("Usuario o contraseña incorrectos");
-//        }
-    }while (opcion != 2);
+            }
+        } while (opcion != 2);
+    }
+
+    void agregarEstudiante(Estudiante estudiante) {
+        listaUsuarios.agregarUsuario(estudiante);
+        listaEstudiantes.agregarEstudiante(estudiante);
+        arbolEstudiantes.agregarEstudiante(estudiante);
     }
 
     void menuAdministrador() {
