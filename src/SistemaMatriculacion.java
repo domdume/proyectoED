@@ -1,11 +1,10 @@
 import java.util.Scanner;
-
+import javax.swing.*;
 public class SistemaMatriculacion {
     ListaUsuarios listaUsuarios = new ListaUsuarios();
     ListaDoble listaEstudiantes = new ListaDoble();
     ArbolBinarioBusqueda arbolEstudiantes = new ArbolBinarioBusqueda();
     ColaMatriculacion colaMatriculacion = new ColaMatriculacion(10);
-
 
     public static void main(String[] args) {
         SistemaMatriculacion sistema = new SistemaMatriculacion();
@@ -15,46 +14,63 @@ public class SistemaMatriculacion {
     void iniciarSistema() {
         // Crear algunos usuarios de prueba
         int opcion;
+
         listaUsuarios.agregarUsuario(new Administrador("admin", "admin123"));
         agregarEstudiante(new Estudiante("juan", "juan123", 1, "Juan Perez"));
         agregarEstudiante(new Estudiante("maria", "maria123", 2, "Maria Lopez"));
         agregarEstudiante(new Estudiante("salma", "salma123", 3, "Salma Morales"));
 
         do {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("BN AL SISTEMA UNIVERSIDAD MORALES");
-            System.out.println("1. INGRESAR");
-            System.out.println("2. CERRAR SISTEMA");
-            System.out.println("Bienvenido al Sistema de Matriculación");
-            System.out.print("Opción: ");
-            opcion = scanner.nextInt();
+
+            opcion = Integer.parseInt(JOptionPane.showInputDialog(null, "MATRICULACIONES EPN \n" +
+                    " ELIJA UNA OPCION \n \n" +
+                    "1.Ingreasar al sistema \n"+
+                    "2.Cerrar Sistema \n"));
 
             switch (opcion) {
                 case 1:
-                    Scanner scanner1 = new Scanner(System.in);
-                    System.out.print("Usuario: ");
-                    String usuario = scanner1.nextLine();
-                    System.out.print("Contraseña: ");
-                    String contraseña = scanner1.nextLine();
 
-                    Usuario user = listaUsuarios.validarUsuario(usuario, contraseña);
+                    int opcionEstudiante;
 
-                    if (user != null) {
-                        if (user instanceof Administrador) {
-                            menuAdministrador();
-                        } else if (user instanceof Estudiante) {
-                            menuEstudiante((Estudiante) user);
-                        }
-                    } else {
-                        System.out.println("Usuario o contraseña incorrectos");
+                    opcionEstudiante = Integer.parseInt(JOptionPane.showInputDialog(null, "SISTEMA DE MATRICULACIÓN \n" +
+                            "ESCUELA POLITÉCNICA NACIONAL \n \n" +
+                            "Eliga el modo de Usuario \n "+
+                            "1. Estudiante: \n" +
+                            "2. Administración: \n"));
+
+                    switch (opcionEstudiante){
+                        case 1:
+                            String usuario = JOptionPane.showInputDialog(null, "Estudiante: ");
+                            String contraseña = JOptionPane.showInputDialog(null, "Contraseña: ");
+                            Usuario user = listaUsuarios.validarUsuario(usuario, contraseña);
+                            if (user != null) {
+                                if (user instanceof Estudiante) {
+                                    menuEstudiante((Estudiante) user);
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+                            }
+                            break;
+                        case 2:
+                            String usuarioAdmin = JOptionPane.showInputDialog(null, "Administrador: ");
+                            String contraseñaAdmin = JOptionPane.showInputDialog(null, "Contraseña: ");
+                            Usuario userAdmin = listaUsuarios.validarUsuario(usuarioAdmin, contraseñaAdmin);
+                            if (userAdmin != null) {
+                                if (userAdmin instanceof Administrador) {
+                                    menuAdministrador();
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+                            }
+                            break;
                     }
-                    break;
+
                 case 2:
-                    System.out.println("Saliendo...");
+                    System.out.println("Saliendo..."); // del menu de ingresar y cerrar sistema
                     break;
             }
         } while (opcion != 2);
-    }
+      }
 
     void agregarEstudiante(Estudiante estudiante) {
         listaUsuarios.agregarUsuario(estudiante);
@@ -63,17 +79,14 @@ public class SistemaMatriculacion {
     }
 
     void menuAdministrador() {
-        Scanner scanner = new Scanner(System.in);
         int opcion;
-
         do {
-            System.out.println("Menú Administrador:");
-            System.out.println("1. Ver todos los estudiantes");
-            System.out.println("2. Ver estudiantes matriculados");
-            System.out.println("3. Buscar estudiante");
-            System.out.println("4. Salir");
-            System.out.print("Opción: ");
-            opcion = scanner.nextInt();
+            opcion = Integer.parseInt(JOptionPane.showInputDialog(null, "Solo Administradores:\n \n" +
+                    "1. Ver todos los estudiantes\n" +
+                    "2. Ver estudiantes matriculados\n" +
+                    "3. Buscar estudiante\n" +
+                    "4. Salir\n" +
+                    "Opción: "));
 
             switch (opcion) {
                 case 1:
@@ -83,46 +96,41 @@ public class SistemaMatriculacion {
                     listaEstudiantes.mostrarEstudiantesMatriculados(colaMatriculacion);
                     break;
                 case 3:
-                    System.out.print("Ingrese el ID del estudiante: ");
-                    int id = scanner.nextInt();
+                    int id = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el código único del estudiante: "));
                     Estudiante estudiante = arbolEstudiantes.buscarEstudiante(id);
                     if (estudiante != null) {
-                        System.out.println("ID: " + estudiante.id + ", Nombre: " + estudiante.nombre);
+                        JOptionPane.showMessageDialog(null, "Código Unico: " + estudiante.id + ", Nombre: " + estudiante.nombre);
                     } else {
-                        System.out.println("Estudiante no encontrado");
+                        JOptionPane.showMessageDialog(null, "Estudiante no encontrado");
                     }
                     break;
                 case 4:
-                    System.out.println("Saliendo...");
+                    JOptionPane.showMessageDialog(null, "Saliendo...");
                     break;
                 default:
-                    System.out.println("Opción inválida");
+                    JOptionPane.showMessageDialog(null, "Opción inválida");
             }
         } while (opcion != 4);
     }
 
     void menuEstudiante(Estudiante estudiante) {
-        Scanner scanner = new Scanner(System.in);
         int opcion;
-
         do {
-            System.out.println("Menú Estudiante:");
-            System.out.println("1. Matricularse");
-            System.out.println("2. Salir");
-            System.out.print("Opción: ");
-            opcion = scanner.nextInt();
+            opcion = Integer.parseInt(JOptionPane.showInputDialog(null, "Solo Estudiantes: \n \n" +
+                    "1. Matricularse\n" +
+                    "2. Salir\n" +
+                    "Opción: "));
 
             switch (opcion) {
                 case 1:
                     colaMatriculacion.agregarSolicitud(estudiante);
-                    System.out.println("Solicitud de matriculación enviada");
-
+                    JOptionPane.showMessageDialog(null, "Solicitud de matriculación enviada");
                     break;
                 case 2:
-                    System.out.println("Saliendo...");
+                    JOptionPane.showMessageDialog(null, "Saliendo...");
                     break;
                 default:
-                    System.out.println("Opción inválida");
+                    JOptionPane.showMessageDialog(null, "Opción inválida");
             }
         } while (opcion != 2);
     }

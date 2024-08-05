@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 class ListaDoble {
     NodoDoble cabeza;
 
@@ -18,7 +20,8 @@ class ListaDoble {
     void mostrarEstudiantes() {
         NodoDoble temp = cabeza;
         while (temp != null) {
-            System.out.println("ID: " + temp.estudiante.id + ", Nombre: " + temp.estudiante.nombre);
+            JOptionPane.showMessageDialog(null, "Código Único: " + temp.estudiante.id + ", Nombre: " + temp.estudiante.nombre);
+            //System.out.println("ID: " + temp.estudiante.id + ", Nombre: " + temp.estudiante.nombre);
             temp = temp.siguiente;
         }
     }
@@ -27,7 +30,8 @@ class ListaDoble {
         NodoDoble temp = cabeza;
         while (temp != null) {
             if (colaMatriculacion.estaMatriculado(temp.estudiante)) {
-                System.out.println("ID: " + temp.estudiante.id + ", Nombre: " + temp.estudiante.nombre);
+                JOptionPane.showMessageDialog(null, "Código Único: " + temp.estudiante.id + ", Nombre: " + temp.estudiante.nombre);
+                //System.out.println("ID: " + temp.estudiante.id + ", Nombre: " + temp.estudiante.nombre);
             }
             temp = temp.siguiente;
         }

@@ -23,16 +23,16 @@ class ColaMatriculacion {
         tamañoActual++;
     }
 
-    Estudiante procesarSolicitud() {
-        if (tamañoActual == 0) {
-            System.out.println("No hay solicitudes en la cola");
-            return null;
-        }
-        Estudiante temp = cola[frente];
-        frente = (frente + 1) % capacidad;
-        tamañoActual--;
-        return temp;
-    }
+//    Estudiante procesarSolicitud() {
+//        if (tamañoActual == 0) {
+//            System.out.println("No hay solicitudes en la cola");
+//            return null;
+//        }
+//        Estudiante temp = cola[frente];
+//        frente = (frente + 1) % capacidad;
+//        tamañoActual--;
+//        return temp;
+//    }
 
     boolean estaMatriculado(Estudiante estudiante) {
         if (tamañoActual == 0) {
