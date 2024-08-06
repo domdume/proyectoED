@@ -24,6 +24,7 @@ class ArbolBinarioBusqueda {
     }
 
     Estudiante buscarRecursivo(NodoBST actual, int id) {
+
         if (actual == null) {
             return null;
         }
@@ -32,7 +33,7 @@ class ArbolBinarioBusqueda {
             return actual.estudiante;
         }
 
-        return id < actual.estudiante.id
+        return (id < actual.estudiante.id)
                 ? buscarRecursivo(actual.izquierdo, id)
                 : buscarRecursivo(actual.derecho, id);
     }

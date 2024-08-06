@@ -39,6 +39,10 @@ class ListaUsuarios{
 + agregarUsuario(usuario: Usuario)
 + validarUsuario( (usuario: String, contraseña: String) : Usuario
 }
+class Materia {
+- hora : Stirng
+- nombre : String
+}
 class NodoBST{}
 class NodoDoble{}
 class NodoUsuario{}
@@ -58,6 +62,7 @@ SistemaMatriculacion --> ListaDoble
 SistemaMatriculacion --> ListaUsuarios
 SistemaMatriculacion --> ArbolBinarioBusqueda
 SistemaMatriculacion --> ColaMatriculacion
+SistemaMatriculacion --> Materia
 ColaMatriculacion --> Estudiante
 ListaUsuarios --> NodoUsuario
 ListaDoble --> NodoDoble

@@ -36,11 +36,11 @@ public class SistemaMatriculacion {
                             "ESCUELA POLITÉCNICA NACIONAL \n \n" +
                             "Eliga el modo de Usuario \n "+
                             "1. Estudiante: \n" +
-                            "2. Administración: \n"));
+                            "2. Administrador: \n"));
 
                     switch (opcionEstudiante){
                         case 1:
-                            String usuario = JOptionPane.showInputDialog(null, "Estudiante: ");
+                            String usuario = JOptionPane.showInputDialog(null, "Usuario de estudiante: ");
                             String contraseña = JOptionPane.showInputDialog(null, "Contraseña: ");
                             Usuario user = listaUsuarios.validarUsuario(usuario, contraseña);
                             if (user != null) {
@@ -124,6 +124,24 @@ public class SistemaMatriculacion {
             switch (opcion) {
                 case 1:
                     colaMatriculacion.agregarSolicitud(estudiante);
+//                    int opcionMateria;
+//                    opcionMateria = Integer.parseInt(JOptionPane.showInputDialog(null, "Materias a matricularse \n" +
+//                            " ELIJA UNA OPCION \n \n" +
+//                            "1.Fundamentos de Redes \n"+
+//                            "2.Arquitectura de computadoras \n" +
+//                            "2.Sistemas Operativos \n"));
+//                    switch (opcionMateria){
+//                        case 1:
+//                            colaMatriculacion.agregarSolicitud(estudiante);
+//                            JOptionPane.showMessageDialog(null, "Solicitud de matriculación enviada");
+//                            break;
+//                        case 2:
+//                            colaMatriculacion.agregarSolicitud(estudiante);
+//                            JOptionPane.showMessageDialog(null, "Solicitud de matriculación enviada");
+//                        default:
+//                            JOptionPane.showMessageDialog(null, "Opción inválida");
+//                            break;
+//                    }
                     JOptionPane.showMessageDialog(null, "Solicitud de matriculación enviada");
                     break;
                 case 2:
