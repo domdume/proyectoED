@@ -1,12 +1,12 @@
 class ListaUsuarios {
-    NodoUsuario cabeza;
+    NodoListaSimple cabeza;
 
     void agregarUsuario(Usuario usuario) {
-        NodoUsuario nuevoNodo = new NodoUsuario(usuario);
+        NodoListaSimple nuevoNodo = new NodoListaSimple(usuario);
         if (cabeza == null) {
             cabeza = nuevoNodo;
         } else {
-            NodoUsuario temp = cabeza;
+            NodoListaSimple temp = cabeza;
             while (temp.siguiente != null) {
                 temp = temp.siguiente;
             }
@@ -15,7 +15,7 @@ class ListaUsuarios {
     }
 
     Usuario validarUsuario(String usuario, String contraseña) {
-        NodoUsuario temp = cabeza;
+        NodoListaSimple temp = cabeza;
         while (temp != null) {
             if (temp.usuario.usuario.equals(usuario) && temp.usuario.contraseña.equals(contraseña)) {
                 return temp.usuario;
