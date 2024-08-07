@@ -16,9 +16,9 @@ public class SistemaMatriculacion {
         int opcion;
 
         listaUsuarios.agregarUsuario(new Administrador("admin", "admin123"));
-        agregarEstudiante(new Estudiante("juan", "juan123", 1, "Juan Perez"));
-        agregarEstudiante(new Estudiante("maria", "maria123", 2, "Maria Lopez"));
-        agregarEstudiante(new Estudiante("salma", "salma123", 3, "Salma Morales"));
+        agregarEstudiante(new Estudiante("juan", "juan123", 202218837, "Juan Perez"));
+        agregarEstudiante(new Estudiante("maria", "maria123", 202220766, "Maria Lopez"));
+        agregarEstudiante(new Estudiante("salma", "salma123", 202220765, "Salma Morales"));
 
         do {
             opcion = Integer.parseInt(JOptionPane.showInputDialog(null, "MATRICULACIONES EPN \n" +
@@ -131,7 +131,7 @@ public class SistemaMatriculacion {
                 return;
             }
             opcion = Integer.parseInt(JOptionPane.showInputDialog(null, "Gestionar Solicitudes de Matriculación:\n \n" +
-                    "Estudiante: " + solicitudActual.nombre + " (ID: " + solicitudActual.id + ")\n" +
+                    "Estudiante: " + solicitudActual.nombre + " (Código único: " + solicitudActual.id + ")\n" +
                     "1. Aceptar solicitud\n" +
                     "2. Rechazar solicitud\n" +
                     "3. Salir\n" +
