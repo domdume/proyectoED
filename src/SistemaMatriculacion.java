@@ -1,10 +1,11 @@
-import java.util.Scanner;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 public class SistemaMatriculacion {
     ListaUsuarios listaUsuarios = new ListaUsuarios();
     ListaDoble listaEstudiantes = new ListaDoble();
     ArbolBinarioBusqueda arbolEstudiantes = new ArbolBinarioBusqueda();
-    ColaMatriculacion colaMatriculacion = new ColaMatriculacion(10);
+    ColaMatriculacion colaMatriculacion = new ColaMatriculacion(1000);
 
     public static void main(String[] args) {
         SistemaMatriculacion sistema = new SistemaMatriculacion();
@@ -12,7 +13,6 @@ public class SistemaMatriculacion {
     }
 
     void iniciarSistema() {
-        // Crear algunos usuarios de prueba
         int opcion;
 
         listaUsuarios.agregarUsuario(new Administrador("admin", "admin123"));
@@ -21,26 +21,23 @@ public class SistemaMatriculacion {
         agregarEstudiante(new Estudiante("salma", "salma123", 3, "Salma Morales"));
 
         do {
-
             opcion = Integer.parseInt(JOptionPane.showInputDialog(null, "MATRICULACIONES EPN \n" +
-                    " ELIJA UNA OPCION \n \n" +
-                    "1.Ingreasar al sistema \n"+
-                    "2.Cerrar Sistema \n"));
+                    "ELIJA UNA OPCION \n \n" +
+                    "1.Ingresar al sistema \n" +
+                    "2.Cerrar Sistema \n \n"));
 
             switch (opcion) {
                 case 1:
-
                     int opcionEstudiante;
-
                     opcionEstudiante = Integer.parseInt(JOptionPane.showInputDialog(null, "SISTEMA DE MATRICULACIÓN \n" +
                             "ESCUELA POLITÉCNICA NACIONAL \n \n" +
-                            "Eliga el modo de Usuario \n "+
+                            "Eliga el modo de Usuario\n " +
                             "1. Estudiante: \n" +
-                            "2. Administrador: \n"));
+                            "2. Administrador: \n \n"));
 
-                    switch (opcionEstudiante){
+                      switch (opcionEstudiante) {
                         case 1:
-                            String usuario = JOptionPane.showInputDialog(null, "Usuario de estudiante: ");
+                            String usuario = JOptionPane.showInputDialog(null, "Ingrese su usuario de estudiante: ");
                             String contraseña = JOptionPane.showInputDialog(null, "Contraseña: ");
                             Usuario user = listaUsuarios.validarUsuario(usuario, contraseña);
                             if (user != null) {
@@ -52,7 +49,7 @@ public class SistemaMatriculacion {
                             }
                             break;
                         case 2:
-                            String usuarioAdmin = JOptionPane.showInputDialog(null, "Administrador: ");
+                            String usuarioAdmin = JOptionPane.showInputDialog(null, "Ingrese su usuario de administrador: ");
                             String contraseñaAdmin = JOptionPane.showInputDialog(null, "Contraseña: ");
                             Usuario userAdmin = listaUsuarios.validarUsuario(usuarioAdmin, contraseñaAdmin);
                             if (userAdmin != null) {
@@ -60,17 +57,22 @@ public class SistemaMatriculacion {
                                     menuAdministrador();
                                 }
                             } else {
-                                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+                             JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
                             }
                             break;
-                    }
-
-                case 2:
-                    System.out.println("Saliendo..."); // del menu de ingresar y cerrar sistema
+                        default:
+                            mostrarMensajeConTiempo("Opción Invalida", 1000);
+                      }
                     break;
+                    case 2:
+                        mostrarMensajeConTiempo("Saliendo...", 1000); // del menú de ingresar y cerrar sistema
+                    break;
+                    default:
+                       mostrarMensajeConTiempo("Opción Invalida", 1000);
+
             }
         } while (opcion != 2);
-      }
+    }
 
     void agregarEstudiante(Estudiante estudiante) {
         listaUsuarios.agregarUsuario(estudiante);
@@ -85,8 +87,9 @@ public class SistemaMatriculacion {
                     "1. Ver todos los estudiantes\n" +
                     "2. Ver estudiantes matriculados\n" +
                     "3. Buscar estudiante\n" +
-                    "4. Salir\n" +
-                    "Opción: "));
+                    "4. Gestionar solicitudes de matriculación\n" +
+                    "5. Salir\n \n" +
+                    "Opción: \n "));
 
             switch (opcion) {
                 case 1:
@@ -101,16 +104,59 @@ public class SistemaMatriculacion {
                     if (estudiante != null) {
                         JOptionPane.showMessageDialog(null, "Código Unico: " + estudiante.id + ", Nombre: " + estudiante.nombre);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Estudiante no encontrado");
+//                        JOptionPane.showMessageDialog(null, "Estudiante no encontrado");
+                        mostrarMensajeConTiempo("Estudiante no encontrado", 2000);
                     }
                     break;
                 case 4:
-                    JOptionPane.showMessageDialog(null, "Saliendo...");
+                    gestionarSolicitudesMatriculacion();
+                    break;
+                case 5:
+                    mostrarMensajeConTiempo("Saliendo...", 1000);
                     break;
                 default:
-                    JOptionPane.showMessageDialog(null, "Opción inválida");
+//                    JOptionPane.showMessageDialog(null, "Opción inválida");
+                    mostrarMensajeConTiempo("Opción Invalida", 1000);
             }
-        } while (opcion != 4);
+        } while (opcion != 5);
+    }
+
+    void gestionarSolicitudesMatriculacion() {
+        int opcion;
+        do {
+            Estudiante solicitudActual = colaMatriculacion.verPrimeraSolicitud();
+            if (solicitudActual == null) {
+//                JOptionPane.showMessageDialog(null, "No hay solicitudes en la cola");
+                mostrarMensajeConTiempo("No hay solicitudes ha gestionar", 1000);
+                return;
+            }
+            opcion = Integer.parseInt(JOptionPane.showInputDialog(null, "Gestionar Solicitudes de Matriculación:\n \n" +
+                    "Estudiante: " + solicitudActual.nombre + " (ID: " + solicitudActual.id + ")\n" +
+                    "1. Aceptar solicitud\n" +
+                    "2. Rechazar solicitud\n" +
+                    "3. Salir\n" +
+                    "Opción: "));
+
+            switch (opcion) {
+                case 1:
+                    colaMatriculacion.procesarSolicitud();
+                    solicitudActual.matriculado = true; // Marcar como matriculado
+//                    JOptionPane.showMessageDialog(null, "Solicitud aceptada");
+                    mostrarMensajeConTiempo("La solicitud ha sido aceptada", 3000);
+                    break;
+                case 2:
+                    colaMatriculacion.procesarSolicitud();
+//                    JOptionPane.showMessageDialog(null, "Solicitud rechazada");
+                    mostrarMensajeConTiempo("La Solicitud ha sido rechazada", 3000);
+                    break;
+                case 3:
+                    mostrarMensajeConTiempo("Saliendo...", 1000);
+                    break;
+                default:
+//                    JOptionPane.showMessageDialog(null, "Opción inválida");
+                    mostrarMensajeConTiempo("Opcion Invalida", 1000);
+            }
+        } while (opcion != 3);
     }
 
     void menuEstudiante(Estudiante estudiante) {
@@ -124,32 +170,30 @@ public class SistemaMatriculacion {
             switch (opcion) {
                 case 1:
                     colaMatriculacion.agregarSolicitud(estudiante);
-//                    int opcionMateria;
-//                    opcionMateria = Integer.parseInt(JOptionPane.showInputDialog(null, "Materias a matricularse \n" +
-//                            " ELIJA UNA OPCION \n \n" +
-//                            "1.Fundamentos de Redes \n"+
-//                            "2.Arquitectura de computadoras \n" +
-//                            "2.Sistemas Operativos \n"));
-//                    switch (opcionMateria){
-//                        case 1:
-//                            colaMatriculacion.agregarSolicitud(estudiante);
-//                            JOptionPane.showMessageDialog(null, "Solicitud de matriculación enviada");
-//                            break;
-//                        case 2:
-//                            colaMatriculacion.agregarSolicitud(estudiante);
-//                            JOptionPane.showMessageDialog(null, "Solicitud de matriculación enviada");
-//                        default:
-//                            JOptionPane.showMessageDialog(null, "Opción inválida");
-//                            break;
-//                    }
-                    JOptionPane.showMessageDialog(null, "Solicitud de matriculación enviada");
+                    //JOptionPane.showMessageDialog(null, "Solicitud de matriculación enviada");
+                    mostrarMensajeConTiempo("Solicitud de matriculación enviada", 1000);
                     break;
                 case 2:
-                    JOptionPane.showMessageDialog(null, "Saliendo...");
+                    mostrarMensajeConTiempo("Saliendo...", 1000);
                     break;
                 default:
-                    JOptionPane.showMessageDialog(null, "Opción inválida");
+                    mostrarMensajeConTiempo("Opcion Inválida", 1000);
             }
         } while (opcion != 2);
+    }
+    //esta funcion tienen librerias aparte pero solo es para darle tiempo de vida a las ventanas emergentes :c
+    void mostrarMensajeConTiempo(String mensaje, int tiempoVisible) {
+        JOptionPane optionPane = new JOptionPane(mensaje, JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = optionPane.createDialog("Mensaje"); //se crea una ventana de dialogo donde se pondrá el mensaje
+        Timer timer = new Timer(tiempoVisible, new ActionListener() { //esto digamos que es lo nuevo que se crea un cronómetro
+            @Override //lo que dice tiempo visible es int ya que es en milisegundos y si quiero que dure 1 segundo pongo 1000
+            public void actionPerformed(ActionEvent e) {
+                dialog.dispose(); // esta función lo que hace es que suceda lo del tiempo de vida de la ventana,
+                // es parte de la libreria de ActionListener
+            }
+        });
+        timer.setRepeats(false);
+        timer.start(); //iniciamos el cronómetro
+        dialog.setVisible(true);
     }
 }

@@ -21,7 +21,6 @@ class ListaDoble {
         NodoDoble temp = cabeza;
         while (temp != null) {
             JOptionPane.showMessageDialog(null, "Código Único: " + temp.estudiante.id + ", Nombre: " + temp.estudiante.nombre);
-            //System.out.println("ID: " + temp.estudiante.id + ", Nombre: " + temp.estudiante.nombre);
             temp = temp.siguiente;
         }
     }
@@ -29,11 +28,11 @@ class ListaDoble {
     void mostrarEstudiantesMatriculados(ColaMatriculacion colaMatriculacion) {
         NodoDoble temp = cabeza;
         while (temp != null) {
-            if (colaMatriculacion.estaMatriculado(temp.estudiante)) {
+            if (temp.estudiante.matriculado) { // Comprobar si está matriculado
                 JOptionPane.showMessageDialog(null, "Código Único: " + temp.estudiante.id + ", Nombre: " + temp.estudiante.nombre);
-                //System.out.println("ID: " + temp.estudiante.id + ", Nombre: " + temp.estudiante.nombre);
             }
             temp = temp.siguiente;
         }
     }
 }
+

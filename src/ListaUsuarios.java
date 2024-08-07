@@ -24,5 +24,4 @@ class ListaUsuarios {
         }
         return null;
     }
-
 }

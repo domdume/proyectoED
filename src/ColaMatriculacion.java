@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 class ColaMatriculacion {
     Estudiante[] cola;
     int frente;
@@ -15,38 +17,30 @@ class ColaMatriculacion {
 
     void agregarSolicitud(Estudiante estudiante) {
         if (tamañoActual == capacidad) {
-            System.out.println("La cola de matriculación está llena");
+            JOptionPane.showMessageDialog(null, "La cola de matriculación esta llena");
             return;
         }
         fin = (fin + 1) % capacidad;
         cola[fin] = estudiante;
         tamañoActual++;
     }
-
-//    Estudiante procesarSolicitud() {
-//        if (tamañoActual == 0) {
-//            System.out.println("No hay solicitudes en la cola");
-//            return null;
-//        }
-//        Estudiante temp = cola[frente];
-//        frente = (frente + 1) % capacidad;
-//        tamañoActual--;
-//        return temp;
-//    }
-
-    boolean estaMatriculado(Estudiante estudiante) {
+    Estudiante procesarSolicitud() {
         if (tamañoActual == 0) {
-            return false;
+            JOptionPane.showMessageDialog(null, "No hay solicitudes ha gestionar");
+            return null;
         }
-        int i = frente;
-        int count = 0;
-        while (count < tamañoActual) {
-            if (cola[i] != null && cola[i].id == estudiante.id) {
-                return true;
-            }
-            i = (i + 1) % capacidad;
-            count++;
-        }
-        return false;
+        Estudiante temp = cola[frente];
+        frente = (frente + 1) % capacidad;
+        tamañoActual--;
+        return temp;
     }
+
+    Estudiante verPrimeraSolicitud() {
+        if (tamañoActual == 0) {
+            System.out.println("No hay solicitudes a gestionar");
+            return null;
+        }
+        return cola[frente];
+    }
+
 }

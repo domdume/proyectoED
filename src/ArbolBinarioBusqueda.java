@@ -24,7 +24,6 @@ class ArbolBinarioBusqueda {
     }
 
     Estudiante buscarRecursivo(NodoBST actual, int id) {
-
         if (actual == null) {
             return null;
         }
