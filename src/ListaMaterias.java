@@ -47,10 +47,48 @@ public class ListaMaterias {
         return null; // Si no se encuentra, retornar null
     }
 
-    public Materia elegirMateria() {
-        int opcion;
-        Materia materiaElegida = null;
-        do {
+//    public Materia elegirMateria() {
+//        int opcion;
+//        Materia materiaElegida = null;
+//        do {
+//            opcion = Integer.parseInt(JOptionPane.showInputDialog(null, "Buscar Materia:\n \n" +
+//                    "1. Buscar Materia por nombre\n" +
+//                    "2. Buscar Materia por código\n" +
+//                    "3. Salir\n" +
+//                    "Opción: "));
+//
+//            switch (opcion) {
+//                case 1:
+//                    String nombre = JOptionPane.showInputDialog(null, "Ingrese el nombre de la Materia: ");
+//                    materiaElegida = buscarPorNombre(nombre);
+//                    if (materiaElegida != null) {
+//                        JOptionPane.showMessageDialog(null, "Materia encontrada: " + materiaElegida.getNombre());
+//                    } else {
+//                        JOptionPane.showMessageDialog(null, "Materia no encontrada");
+//                    }
+//                    break;
+//                case 2:
+//                    String codigo = JOptionPane.showInputDialog(null, "Ingrese el código de la Materia: ");
+//                    materiaElegida = buscarPorCodigo(codigo);
+//                    if (materiaElegida != null) {
+//                        JOptionPane.showMessageDialog(null, "Materia encontrada: " + materiaElegida.getNombre());
+//                    } else {
+//                        JOptionPane.showMessageDialog(null, "Materia no encontrada");
+//                    }
+//                    break;
+//                case 3:
+//                    break;
+//                default:
+//                    JOptionPane.showMessageDialog(null, "Opción inválida");
+//            }
+//        } while (opcion != 3 && materiaElegida == null);
+//        return materiaElegida;
+//    }
+public Materia elegirMateria() {
+    int opcion = 0;
+    Materia materiaElegida = null;
+    do {
+        try {
             opcion = Integer.parseInt(JOptionPane.showInputDialog(null, "Buscar Materia:\n \n" +
                     "1. Buscar Materia por nombre\n" +
                     "2. Buscar Materia por código\n" +
@@ -73,7 +111,7 @@ public class ListaMaterias {
                     if (materiaElegida != null) {
                         JOptionPane.showMessageDialog(null, "Materia encontrada: " + materiaElegida.getNombre());
                     } else {
-                        JOptionPane.showMessageDialog(null, "Materia no encontrada");
+                        JOptionPane.showMessageDialog(null, "Materia no encontrada, asegúrese de escribir bien el codigo de la materia");
                     }
                     break;
                 case 3:
@@ -81,7 +119,10 @@ public class ListaMaterias {
                 default:
                     JOptionPane.showMessageDialog(null, "Opción inválida");
             }
-        } while (opcion != 3 && materiaElegida == null);
-        return materiaElegida;
-    }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Entrada inválida, por favor ingrese un número");
+        }
+    } while (opcion != 3 && materiaElegida == null);
+    return materiaElegida;
+}
 }
