@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 public class SistemaMatriculacion {
     ListaUsuarios listaUsuarios = new ListaUsuarios();
+    ListaMaterias listaMaterias = new ListaMaterias();
     ListaDoble listaEstudiantes = new ListaDoble();
     ArbolBinarioBusqueda arbolEstudiantes = new ArbolBinarioBusqueda();
     ColaMatriculacion colaMatriculacion = new ColaMatriculacion(1000);
@@ -35,8 +36,7 @@ public class SistemaMatriculacion {
                             "Eliga el modo de Usuario\n " +
                             "1. Estudiante: \n" +
                             "2. Administrador: \n \n"));
-
-                      switch (opcionEstudiante) {
+                    switch (opcionEstudiante) {
                         case 1:
                             String usuario = JOptionPane.showInputDialog(null, "Ingrese su usuario de estudiante: ");
                             String contraseña = JOptionPane.showInputDialog(null, "Contraseña: ");
@@ -58,18 +58,18 @@ public class SistemaMatriculacion {
                                     menuAdministrador();
                                 }
                             } else {
-                             JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+                                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
                             }
                             break;
                         default:
                             mostrarMensajeConTiempo("Opción Invalida", 1000);
-                      }
+                    }
                     break;
                     case 2:
                         mostrarMensajeConTiempo("Saliendo...", 1000); // del menú de ingresar y cerrar sistema
                     break;
                     default:
-                       mostrarMensajeConTiempo("Opción Invalida", 1000);
+                        mostrarMensajeConTiempo("Opción Invalida", 1000);
 
             }
         } while (opcion != 2);
@@ -131,10 +131,16 @@ public class SistemaMatriculacion {
                 mostrarMensajeConTiempo("No hay solicitudes ha gestionar", 1000);
                 return;
             }
+            Materia materia = solicitudActual.materiaSolicitada;
             opcion = Integer.parseInt(JOptionPane.showInputDialog(null, "Gestionar Solicitudes de Matriculación:\n \n" +
                     "Estudiante: " + solicitudActual.nombre + " (Código único: " + solicitudActual.id + ")\n" +
+                    "Materia solicitada: " + (materia != null ? materia.getNombre() : "N/A") + "\n" +
                     "1. Aceptar solicitud\n" +
                     "2. Rechazar solicitud\n" +
+//            opcion = Integer.parseInt(JOptionPane.showInputDialog(null, "Gestionar Solicitudes de Matriculación:\n \n" +
+//                    "Estudiante: " + solicitudActual.nombre + " (Código único: " + solicitudActual.id + ")\n" +
+//                    "1. Aceptar solicitud\n" +
+//                    "2. Rechazar solicitud\n" +
                     "3. Salir\n" +
                     "Opción: "));
 
@@ -170,15 +176,22 @@ public class SistemaMatriculacion {
 
             switch (opcion) {
                 case 1:
-                    colaMatriculacion.agregarSolicitud(estudiante);
-                    //JOptionPane.showMessageDialog(null, "Solicitud de matriculación enviada");
-                    mostrarMensajeConTiempo("Solicitud de matriculación enviada", 1000);
+                    Materia materia = listaMaterias.elegirMateria();
+                    if (materia != null) {
+                        int confirmar = JOptionPane.showConfirmDialog(null, "¿Desea matricularse en la materia " + materia.getNombre()
+                                + "?", "Confirmar Matrícula", JOptionPane.YES_NO_OPTION);
+                        if (confirmar == JOptionPane.YES_OPTION) {
+                            estudiante.materiaSolicitada = materia;
+                            colaMatriculacion.agregarSolicitud(estudiante);
+                            mostrarMensajeConTiempo("Solicitud de matriculación enviada", 1000);
+                        }
+                    }
                     break;
                 case 2:
                     mostrarMensajeConTiempo("Saliendo...", 1000);
                     break;
                 default:
-                    mostrarMensajeConTiempo("Opcion Inválida", 1000);
+                    mostrarMensajeConTiempo("Opción Inválida", 1000);
             }
         } while (opcion != 2);
     }

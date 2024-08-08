@@ -1,10 +1,17 @@
 public class Materia {
-    String codigo;
-    String nombre;
+    private String nombre;
+    private String codigo;
 
-    Materia (String nombre, String codigo) {
-        super();
-        this.codigo = codigo;
+    public Materia(String nombre, String codigo) {
         this.nombre = nombre;
+        this.codigo = codigo;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getCodigo() {
+        return codigo;
     }
 }
