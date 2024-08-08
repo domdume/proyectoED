@@ -16,11 +16,10 @@ public class SistemaMatriculacion {
 
     void iniciarSistema() {
         int opcion;
-//
-//        listaUsuarios.agregarUsuario(new Administrador("admin", "admin123"));
-//        agregarEstudiante(new Estudiante("juan", "juan123", 202218837, "Juan Perez"));
-//        agregarEstudiante(new Estudiante("maria", "maria123", 202220766, "Maria Lopez"));
-//        agregarEstudiante(new Estudiante("salma", "salma123", 202220765, "Salma Morales"));
+        listaUsuarios.agregarUsuario(new Administrador("admin", "admin123"));
+        agregarEstudiante(new Estudiante("juan", "juan123", 202218837, "Juan Perez"));
+        agregarEstudiante(new Estudiante("maria", "maria123", 202220766, "Maria Lopez"));
+        agregarEstudiante(new Estudiante("salma", "salma123", 202220765, "Salma Morales"));
 
         do {
             opcion = Integer.parseInt(JOptionPane.showInputDialog(null, "MATRICULACIONES EPN \n" +
