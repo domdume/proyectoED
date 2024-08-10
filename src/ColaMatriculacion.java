@@ -4,43 +4,39 @@ class ColaMatriculacion {
     Estudiante[] cola;
     int frente;
     int fin;
-    int capacidad;
-    int tamañoActual;
+    private int tamaño;
 
-    ColaMatriculacion(int capacidad) {
-        this.capacidad = capacidad;
+    public ColaMatriculacion(int capacidad) {
         cola = new Estudiante[capacidad];
         frente = 0;
         fin = -1;
-        tamañoActual = 0;
+        tamaño = 0;
     }
 
-    void agregarSolicitud(Estudiante estudiante) {
-        if (tamañoActual == capacidad) {
-            JOptionPane.showMessageDialog(null, "La cola de matriculación esta llena");
-            return;
+    public void agregarSolicitud(Estudiante estudiante) {
+        if (tamaño < cola.length) {
+            fin = (fin + 1) % cola.length;
+            cola[fin] = estudiante;
+            tamaño++;
+        } else {
+            System.out.println("La cola está llena. No se puede agregar más solicitudes.");
         }
-        fin = (fin + 1) % capacidad;
-        cola[fin] = estudiante;
-        tamañoActual++;
     }
-    Estudiante procesarSolicitud() {
-        if (tamañoActual == 0) {
-            JOptionPane.showMessageDialog(null, "No hay solicitudes ha gestionar");
+
+    public Estudiante verPrimeraSolicitud() {
+        if (tamaño > 0) {
+            return cola[frente];
+        } else {
             return null;
         }
-        Estudiante temp = cola[frente];
-        frente = (frente + 1) % capacidad;
-        tamañoActual--;
-        return temp;
     }
 
-    Estudiante verPrimeraSolicitud() {
-        if (tamañoActual == 0) {
-            System.out.println("No hay solicitudes a gestionar");
-            return null;
+    public void procesarSolicitud() {
+        if (tamaño > 0) {
+            frente = (frente + 1) % cola.length;
+            tamaño--;
+        } else {
+            System.out.println("No hay solicitudes para procesar.");
         }
-        return cola[frente];
     }
-
 }

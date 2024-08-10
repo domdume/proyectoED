@@ -120,51 +120,54 @@ public class SistemaMatriculacion {
             }
         } while (opcion != 5);
     }
-
     void gestionarSolicitudesMatriculacion() {
-        int opcion;
+        int opcion = 0;
         do {
             Estudiante solicitudActual = colaMatriculacion.verPrimeraSolicitud();
             if (solicitudActual == null) {
-//                JOptionPane.showMessageDialog(null, "No hay solicitudes en la cola");
                 mostrarMensajeConTiempo("No hay solicitudes ha gestionar", 1000);
                 return;
             }
-            Materia materia = solicitudActual.materiaSolicitada;
-            opcion = Integer.parseInt(JOptionPane.showInputDialog(null, "Gestionar Solicitudes de Matriculación:\n \n" +
-                    "Estudiante: " + solicitudActual.nombre + " (Código único: " + solicitudActual.id + ")\n" +
-                    "Materia solicitada: " + (materia != null ? materia.getNombre() : "N/A") + "\n" +
-                    "1. Aceptar solicitud\n" +
-                    "2. Rechazar solicitud\n" +
-//            opcion = Integer.parseInt(JOptionPane.showInputDialog(null, "Gestionar Solicitudes de Matriculación:\n \n" +
-//                    "Estudiante: " + solicitudActual.nombre + " (Código único: " + solicitudActual.id + ")\n" +
-//                    "1. Aceptar solicitud\n" +
-//                    "2. Rechazar solicitud\n" +
-                    "3. Salir\n" +
-                    "Opción: "));
+            boolean solicitudProcesada =false;
+            for (int i = 0; i < solicitudActual.cantidadSolicitudes; i++) {
+                if (!solicitudActual.matriculado[i]) { //Solo procesa las no matriculadas
+                    Materia materia = solicitudActual.materiasSolicitadas[i];
+                    opcion = Integer.parseInt(JOptionPane.showInputDialog(null, "Gestionar Solicitudes de Matriculación:\n \n" +
+                            "Estudiante: " + solicitudActual.nombre + " (Código único: " + solicitudActual.id + ")\n" +
+                            "Materia solicitada: " + (materia != null ? materia.getNombre() : "N/A") + "\n" +
+                            "1. Aceptar solicitud\n" +
+                            "2. Rechazar solicitud\n" +
+                            "3. Salir\n" +
+                            "Opción: "));
 
-            switch (opcion) {
-                case 1:
-                    colaMatriculacion.procesarSolicitud();
-                    solicitudActual.matriculado = true; // Marcar como matriculado
-//                    JOptionPane.showMessageDialog(null, "Solicitud aceptada");
-                    mostrarMensajeConTiempo("La solicitud ha sido aceptada", 3000);
-                    break;
-                case 2:
-                    colaMatriculacion.procesarSolicitud();
-//                    JOptionPane.showMessageDialog(null, "Solicitud rechazada");
-                    mostrarMensajeConTiempo("La Solicitud ha sido rechazada", 3000);
-                    break;
-                case 3:
-                    mostrarMensajeConTiempo("Saliendo...", 1000);
-                    break;
-                default:
-//                    JOptionPane.showMessageDialog(null, "Opción inválida");
-                    mostrarMensajeConTiempo("Opcion Invalida", 1000);
+                    switch (opcion) {
+                        case 1:
+                            solicitudActual.matriculado[i] = true;
+                            mostrarMensajeConTiempo("La solicitud ha sido aceptada", 3000);
+                            solicitudProcesada = true;
+                            break;
+                        case 2:
+                            //solicitudActual.matriculado[i] = false;
+                            mostrarMensajeConTiempo("La Solicitud ha sido rechazada", 3000);
+                            solicitudProcesada = true;
+                            break;
+                        case 3:
+                            mostrarMensajeConTiempo("Saliendo...", 1000);
+                            return; // Sale del método en lugar de solo salir del bucle
+                        default:
+                            mostrarMensajeConTiempo("Opción Inválida", 1000);
+                    }
+
+                    if (solicitudProcesada){
+                        break;
+                    }
+                }
+            }
+            if (solicitudProcesada) {
+                colaMatriculacion.procesarSolicitud(); // Elimina la solicitud después de procesar todas las materias
             }
         } while (opcion != 3);
     }
-
     void menuEstudiante(Estudiante estudiante) {
         int opcion;
         do {
@@ -180,7 +183,8 @@ public class SistemaMatriculacion {
                         int confirmar = JOptionPane.showConfirmDialog(null, "¿Desea matricularse en la materia " + materia.getNombre()
                                 + "?", "Confirmar Matrícula", JOptionPane.YES_NO_OPTION);
                         if (confirmar == JOptionPane.YES_OPTION) {
-                            estudiante.materiaSolicitada = materia;
+                           // estudiante.materiaSolicitada = materia;
+                            estudiante.agregarMateriaSolicitada(materia);
                             colaMatriculacion.agregarSolicitud(estudiante);
                             mostrarMensajeConTiempo("Solicitud de matriculación enviada", 1000);
                         }

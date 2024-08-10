@@ -16,7 +16,6 @@ class ListaDoble {
             nuevoNodo.anterior = temp;
         }
     }
-
     void mostrarEstudiantes() {
         NodoDoble temp = cabeza;
         while (temp != null) {
@@ -24,12 +23,34 @@ class ListaDoble {
             temp = temp.siguiente;
         }
     }
-
     void mostrarEstudiantesMatriculados(ColaMatriculacion colaMatriculacion) {
         NodoDoble temp = cabeza;
         while (temp != null) {
-            if (temp.estudiante.matriculado) { // Comprobar si está matriculado
+            if (estaMatriculadoEnAlgunaMateria(temp.estudiante)) {
                 JOptionPane.showMessageDialog(null, "Código Único: " + temp.estudiante.id + ", Nombre: " + temp.estudiante.nombre);
+            }
+            temp = temp.siguiente;
+        }
+    }
+
+    private boolean estaMatriculadoEnAlgunaMateria(Estudiante estudiante) {
+        // Recorre el arreglo de booleanos para verificar si el estudiante está matriculado en alguna materia
+        for (boolean matriculado : estudiante.matriculado) {
+            if (matriculado) {
+                return true; // Si encuentra al menos un `true`, el estudiante está matriculado en alguna materia
+            }
+        }
+        return false; // Si no encuentra ningún `true`, no está matriculado en ninguna materia
+    }
+    void mostrarEstudiantesMatriculadosPorMateria() {
+        NodoDoble temp = cabeza;
+        while (temp != null) {
+            for (int i = 0; i < temp.estudiante.cantidadSolicitudes; i++) {
+                if (temp.estudiante.matriculado[i]) {
+                    JOptionPane.showMessageDialog(null, "Código Único: " + temp.estudiante.id +
+                            ", Nombre: " + temp.estudiante.nombre +
+                            ", Materia Matriculada: " + temp.estudiante.materiasSolicitadas[i].getNombre());
+                }
             }
             temp = temp.siguiente;
         }
