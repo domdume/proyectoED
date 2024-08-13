@@ -1,4 +1,6 @@
-class ListaUsuarios {
+package sistemaMatriculacion;
+
+public class ListaUsuarios {
     NodoListaSimple cabeza;
 
 //    public ListaUsuarios(){
@@ -13,7 +15,7 @@ class ListaUsuarios {
 //        }
 //    }
 
-    void agregarUsuario(Usuario usuario) {
+    public void agregarUsuario(Usuario usuario) {
         NodoListaSimple nuevoNodo = new NodoListaSimple(usuario);
         if (cabeza == null) {
             cabeza = nuevoNodo;
@@ -26,14 +28,20 @@ class ListaUsuarios {
         }
     }
 
-    Usuario validarUsuario(String usuario, String contraseña) {
+    public Usuario validarUsuario(String usuario, String contraseña) {
+        
         NodoListaSimple temp = cabeza;
         while (temp != null) {
-            if (temp.usuario.usuario.equals(usuario) && temp.usuario.contraseña.equals(contraseña)) {
+            
+            String tempPassword = String.valueOf(temp.usuario.contraseña);
+            
+            if (temp.usuario.usuario.equals(usuario) && tempPassword.equals(contraseña)) {
                 return temp.usuario;
             }
+            
             temp = temp.siguiente;
         }
         return null;
     }
+    
 }

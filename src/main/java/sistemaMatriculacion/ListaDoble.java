@@ -1,9 +1,12 @@
+package sistemaMatriculacion;
+
 import javax.swing.*;
 
-class ListaDoble {
+public class ListaDoble {
+    
     NodoDoble cabeza;
 
-    void agregarEstudiante(Estudiante estudiante) {
+    public void agregarEstudiante(Estudiante estudiante) {
         NodoDoble nuevoNodo = new NodoDoble(estudiante);
         if (cabeza == null) {
             cabeza = nuevoNodo;
@@ -16,6 +19,7 @@ class ListaDoble {
             nuevoNodo.anterior = temp;
         }
     }
+    
     void mostrarEstudiantes() {
         NodoDoble temp = cabeza;
         while (temp != null) {
@@ -32,16 +36,6 @@ class ListaDoble {
             temp = temp.siguiente;
         }
     }
-
-    private boolean estaMatriculadoEnAlgunaMateria(Estudiante estudiante) {
-        // Recorre el arreglo de booleanos para verificar si el estudiante está matriculado en alguna materia
-        for (boolean matriculado : estudiante.matriculado) {
-            if (matriculado) {
-                return true; // Si encuentra al menos un `true`, el estudiante está matriculado en alguna materia
-            }
-        }
-        return false; // Si no encuentra ningún `true`, no está matriculado en ninguna materia
-    }
     void mostrarEstudiantesMatriculadosPorMateria() {
         NodoDoble temp = cabeza;
         while (temp != null) {
@@ -55,5 +49,20 @@ class ListaDoble {
             temp = temp.siguiente;
         }
     }
-}
+    
+    private boolean estaMatriculadoEnAlgunaMateria(Estudiante estudiante) {
+        // Recorre el arreglo de booleanos para verificar si el estudiante está matriculado en alguna materia
+        for (boolean matriculado : estudiante.matriculado) {
+            if (matriculado) {
+                return true; // Si encuentra al menos un `true`, el estudiante está matriculado en alguna materia
+            }
+        }
+        return false; // Si no encuentra ningún `true`, no está matriculado en ninguna materia
+    }
 
+    public NodoDoble getCabeza(){
+        return cabeza;
+    }
+
+    
+}

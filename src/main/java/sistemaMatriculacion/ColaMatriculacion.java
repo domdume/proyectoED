@@ -1,6 +1,8 @@
+package sistemaMatriculacion;
+
 import javax.swing.*;
 
-class ColaMatriculacion {
+public class ColaMatriculacion {
     Estudiante[] cola;
     int frente;
     int fin;

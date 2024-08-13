@@ -1,7 +1,9 @@
-class ArbolBinarioBusqueda {
+package sistemaMatriculacion;
+
+public class ArbolBinarioBusqueda {
     NodoBST raiz;
 
-    void agregarEstudiante(Estudiante estudiante) {
+    public void agregarEstudiante(Estudiante estudiante) {
         raiz = agregarRecursivo(raiz, estudiante);
     }
 
@@ -19,7 +21,7 @@ class ArbolBinarioBusqueda {
         return actual;
     }
 
-    Estudiante buscarEstudiante(int id) {
+    public Estudiante buscarEstudiante(int id) {
         return buscarRecursivo(raiz, id);
     }
 

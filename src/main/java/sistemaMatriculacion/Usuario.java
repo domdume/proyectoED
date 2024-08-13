@@ -1,4 +1,6 @@
-class Usuario {
+package sistemaMatriculacion;
+
+public class Usuario {
     String usuario;
     String contraseña;
 

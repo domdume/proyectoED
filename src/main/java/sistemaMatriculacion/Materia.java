@@ -1,3 +1,5 @@
+package sistemaMatriculacion;
+
 public class Materia {
     private String nombre;
     private String codigo;

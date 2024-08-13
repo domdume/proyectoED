@@ -1,4 +1,6 @@
-class NodoListaSimple {
+package sistemaMatriculacion;
+
+public class NodoListaSimple {
     Usuario usuario;
     Materia materia;
     NodoListaSimple siguiente;

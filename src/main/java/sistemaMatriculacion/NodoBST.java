@@ -1,4 +1,6 @@
-class NodoBST {
+package sistemaMatriculacion;
+
+public class NodoBST {
     Estudiante estudiante;
     NodoBST izquierdo;
     NodoBST derecho;
